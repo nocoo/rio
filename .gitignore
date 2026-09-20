@@ -1,0 +1,15 @@
+# Reference checkouts are local research material, not vendored source.
+/reference/
+
+# Credentials and local runtime state.
+.env
+.env.*
+!.env.example
+.dev.vars
+.dev.vars.*
+.wrangler/
+
+# Build output and machine files.
+node_modules/
+dist/
+.DS_Store
