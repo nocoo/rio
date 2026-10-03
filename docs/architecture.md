@@ -208,12 +208,6 @@ URL、model、voice、已配置状态保存在 D1；API key、Gateway key、Acce
 
 POST/WS 检查同源请求，防止跨站驱动已登录浏览器；同一账号也只操作属于当前绑定的 run。日志保留 request/run/delegation ID、状态和耗时，不记录密钥、完整转写、音频或原始工具输出。设置写操作限所有者；第一版无需额外组织/角色体系。
 
-### Cloudflare Workers VPC 备选
-
-当前官方也提供 Workers VPC，可通过 Tunnel 和 VPC binding 访问私有服务，避免 Gateway 的公开 hostname。但截至调研仍是 beta；VPC Service 的资源/绑定配置和 VPC Network 的更大网络访问范围需要另行评估。[C9]
-
-本次 POC 首选标准 HTTPS + Access Service Auth，便于在设置中独立绑定多台机器和多个 Gateway。如果 review 更重视“完全没有 Gateway 公网 hostname”，可切换为 VPC 路径，Hermes 文本/语音协议不变。
-
 ## 8. 成本、边界和分层
 
 GPT-Live **$0.05/分钟，按秒计费**；等待工具、静音和双方沉默都计入活跃会话时间。90 秒为 $0.075，10 分钟为 $0.50，20 分钟为 $1.00，另加 Hermes 与 Cloudflare 费用。[O2][O6]
@@ -275,5 +269,4 @@ GPT-Live **$0.05/分钟，按秒计费**；等待工具、静音和双方沉默�
 - [C6：Worker Secrets](https://developers.cloudflare.com/workers/configuration/secrets/)
 - [C7：DO 生命周期和外连限制](https://developers.cloudflare.com/durable-objects/concepts/durable-object-lifecycle/) / [计费](https://developers.cloudflare.com/durable-objects/platform/pricing/)
 - [C8：静态资产与 Worker-first 路由](https://developers.cloudflare.com/workers/static-assets/routing/worker-script/) / [workers.dev 入口](https://developers.cloudflare.com/workers/configuration/routing/workers-dev/)
-- [C9：Workers VPC，当前 beta](https://developers.cloudflare.com/workers-vpc/)
 - [C10：cloudflared run 参数与 token-file](https://developers.cloudflare.com/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/cloudflared-parameters/run-parameters/)
