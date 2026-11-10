@@ -21,6 +21,7 @@ jobs:
       typecheck-command: bun run typecheck
       lint-command: bun run lint
       test-command: bun run test:coverage
+      gitleaks-config: .gitleaks.toml
       build: true
       build-command: bun run build && bunx wrangler deploy --dry-run
 
