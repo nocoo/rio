@@ -1,0 +1,49 @@
+{
+  "name": "rio",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "bun@1.4.2",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1 --port 7054 --strictPort",
+    "build": "vite build",
+    "preview": "vite preview --host 127.0.0.1 --port 7054 --strictPort",
+    "lint": "biome check --error-on-warnings .",
+    "lint:fix": "biome check --write .",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "cf:types": "wrangler types",
+    "deploy:check": "bun run build && wrangler deploy --dry-run"
+  },
+  "dependencies": {
+    "hono": "4.13.11",
+    "react": "19.3.1",
+    "react-dom": "19.3.1"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.6.6",
+    "@cloudflare/vite-plugin": "1.66.0",
+    "@cloudflare/workers-types": "5.20261024.1",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "@vitejs/plugin-react": "6.3.0",
+    "@vitest/coverage-v8": "5.1.0",
+    "typescript": "7.0.2",
+    "vite": "8.3.5",
+    "vitest": "5.1.0",
+    "wrangler": "4.156.0"
+  },
+  "trustedDependencies": [
+    "@biomejs/biome",
+    "esbuild",
+    "workerd"
+  ],
+  "overrides": {
+    "esbuild": "^0.28.2",
+    "nanoid": "^3.3.18",
+    "sharp": "^0.35.5",
+    "source-map-js": "1.2.2",
+    "undici": "7.30.1"
+  }
+}

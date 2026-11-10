@@ -12,4 +12,6 @@
 # Build output and machine files.
 node_modules/
 dist/
+coverage/
+.work/
 .DS_Store
