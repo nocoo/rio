@@ -1,0 +1,31 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  quality:
+    uses: nocoo/base-ci/.github/workflows/quality.yml@633a5545fcfec91b688840650d4edf3e9cc1abbd # v2026.10
+    with:
+      runtime-version: "1.4.2"
+      node-version: "26.12.1"
+      install-policy: trusted
+      coverage-path: coverage
+      typecheck-command: bun run typecheck
+      lint-command: bun run lint
+      test-command: bun run test:coverage
+      build: true
+      build-command: bun run build && bunx wrangler deploy --dry-run
+
+  release-smoke:
+    uses: nocoo/base-ci/.github/workflows/workflow-lint.yml@633a5545fcfec91b688840650d4edf3e9cc1abbd # v2026.10
+    with:
+      required-reusable-workflow: nocoo/base-ci/.github/workflows/deploy-worker.yml
+      yamllint: true
