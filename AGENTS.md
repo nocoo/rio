@@ -61,7 +61,7 @@ Keep secrets and local machine configuration outside the repository.
 
 ## Quality contract and current evidence
 
-6DQ retains its name; former G1 belongs to unified L1 since 2026-09-21. Use
+Quality contract follows System1 slots. Use
 `enforced`, `planned`, `manual`, or justified `N/A`; no tracked CI or project
 commit/push gates currently enforce these requirements.
 
