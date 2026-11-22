@@ -17,7 +17,7 @@
     "deploy:check": "bun run build && wrangler deploy --dry-run"
   },
   "dependencies": {
-    "hono": "4.13.16",
+    "hono": "4.13.19",
     "react": "19.3.1",
     "react-dom": "19.3.1"
   },
