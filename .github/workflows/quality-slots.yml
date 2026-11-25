@@ -77,7 +77,12 @@ jobs:
           runtime-version: ${{ env.BUN_VERSION }}
           node-version: ${{ env.NODE_VERSION }}
           install-policy: trusted
-      - run: bun run build && bunx wrangler deploy --dry-run
+      - run: bun run build
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: rio-dist
+          path: dist
+          include-hidden-files: true
 
   l1-unit:
     name: "L1: Unit"
@@ -115,10 +120,22 @@ jobs:
 
   p1-package:
     name: "P1: Package"
-    if: ${{ vars.ENABLE_P1_PACKAGE == 'true' }}
+    needs:
+      - b1-build
     runs-on: ubuntu-latest
     steps:
-      - run: echo "N/A - Private package"
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: nocoo/base-ci/.github/actions/setup-js@dc858360aa7812db61fd9d825943e4efd4dcd0e7 # v2026.17
+        with:
+          package-manager: bun
+          runtime-version: ${{ env.BUN_VERSION }}
+          node-version: ${{ env.NODE_VERSION }}
+          install-policy: trusted
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: rio-dist
+          path: dist
+      - run: bunx wrangler deploy --dry-run --config dist/client/rio/wrangler.json
 
   z1-gate:
     name: "Z1: Gate"
@@ -148,7 +165,8 @@ jobs:
             "${{ needs.g1-secrets.result }}" \
             "${{ needs.g2-dependencies.result }}" \
             "${{ needs.b1-build.result }}" \
-            "${{ needs.l1-unit.result }}"; do
+            "${{ needs.l1-unit.result }}" \
+            "${{ needs.p1-package.result }}"; do
             if [ "$r" != "success" ]; then
               echo "Required slot failed or was skipped: $r"
               exit 1
@@ -157,8 +175,7 @@ jobs:
           for r in \
             "${{ needs.l2-runtime.result }}" \
             "${{ needs.l3-integration.result }}" \
-            "${{ needs.l4-e2e.result }}" \
-            "${{ needs.p1-package.result }}"; do
+            "${{ needs.l4-e2e.result }}"; do
             if [ "$r" != "success" ] && [ "$r" != "skipped" ]; then
               echo "Optional slot failed: $r"
               exit 1
