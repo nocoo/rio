@@ -61,22 +61,7 @@ Keep secrets and local machine configuration outside the repository.
 
 ## Quality contract and current evidence
 
-Quality contract follows System1 slots. Use
-`enforced`, `planned`, `manual`, or justified `N/A`; no tracked CI or project
-commit/push gates currently enforce these requirements.
-
-| Dimension | Current applicability and required follow-up |
-| --- | --- |
-| L1 | N/A for current runtime UT/types: no executable application. Manual document review applies now. Once code exists, require four coverage metrics each >=95%, strict check-only types/lint with zero errors/warnings, no skipped/focused tests, index-snapshot pre-commit and proven failure rejection. |
-| L2 | N/A for current executable endpoints: none implemented. Planned POC acceptance must distinguish controlled local integration from explicitly authorized live Gateway/Tunnel trials. |
-| L3 | Manual design review now; real text/voice user acceptance is planned and cannot be claimed from protocol research. |
-| G2 dependencies | N/A: no tracked executable dependency manifests or lockfiles. Ignored reference repositories retain their own dependencies. |
-| G2 secrets | Planned: a required secret scan must fail if its scanner is absent. No automatic scanner currently protects public research documents. |
-| D1 isolation | N/A for current automated fixtures: none exist. Future tests require owned per-run local state separate from production/daily use, guards before fixture writes/cleanup and SQLite test markers where applicable. No remote test-resource deployments. |
-
-Future targets: unified L1 on the index snapshot in pre-commit (<30s), applicable
-L2/G2 against stdin push refs in pre-push (<3min), and controlled L3 entrypoints.
-Never present these targets as implemented or bypass checks to publish.
+Follows `system1-quality`; CI slots and pinned `nocoo/base-ci@3703a073693d598159e87f77f99587e586c14cfe` (`v2026.24`) live in [.github/workflows/quality-slots.yml](.github/workflows/quality-slots.yml), invoked by [.github/workflows/pipeline.yml](.github/workflows/pipeline.yml) (`quality / Z1: Gate` required on `main`). Enforced CI slots: `S1`, `S2`, `S3`, `G1`, `G2`, `B1`, `L1`, `P1`, `Z1`; `L2`, `L3`, `L4` are `N/A`. CD runs `D1`–`D5` Worker deployment via `deploy-worker.yml` on `main` push (or `workflow_dispatch` with `deploy=true`), reusing `B1` (`rio-dist`) and verifying `https://rio.hexly.ai/api/live`. Status vocabulary: `enforced`, `planned`, `manual`, `N/A`.
 
 ## Completion
 
