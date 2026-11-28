@@ -8,8 +8,8 @@ export default defineConfig({
       provider: "v8",
       reporter: ["text", "json", "html"],
       include: ["src/lib/**/*.ts"],
-      exclude: ["**/*.d.ts", "**/*.test.ts", "src/App.tsx", "src/main.tsx", "src/components/**"],
-      thresholds: { statements: 80, branches: 80, functions: 80, lines: 80 },
+      exclude: ["**/*.d.ts", "**/*.test.ts", "**/*.tsx"],
+      thresholds: { statements: 90, lines: 90, functions: 90, branches: 85 },
     },
   },
 });
